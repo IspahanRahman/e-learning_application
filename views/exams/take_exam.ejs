@@ -23,7 +23,7 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-8 col-sm-offset-2 text">
-              <h1><strong>Exam Code:""</strong>&nbsp &nbsp &nbsp &nbsp &nbsp 
+              <h1><strong>Exam Code:<%= exam_code %> </strong>&nbsp &nbsp &nbsp &nbsp &nbsp 
                 <h1 id="time"></h1>
               </h1>
             </div>
@@ -37,7 +37,7 @@
               </div>
               <div class="form-bottom">
                 <p>
-                  <h4 id="number"></h4><span id="question"></span><br><strong>A:               </strong><span id="optionA"></span>&nbsp &nbsp &nbsp &nbsp &nbsp<strong>B:                </strong><span id="optionB" align="right"></span><br><strong>C:             </strong><span id="optionC"></span>&nbsp &nbsp &nbsp &nbsp &nbsp<strong>D:               </strong><span id="optionD"></span>
+                  <h4 id="number"><%= exam.question[0].question %> </h4><span id="question"></span><br><strong>A:  <%= exam.question[0].optionA %>              </strong><span id="optionA"></span>&nbsp &nbsp &nbsp &nbsp &nbsp<strong>B:   <%= exam.question[0].optionB %>              </strong><span id="optionB" align="right"></span><br><strong>C:   <%= exam.question[0].optionC %>           </strong><span id="optionC"></span>&nbsp &nbsp &nbsp &nbsp &nbsp<strong>D:  <%= exam.question[0].optionD %>              </strong><span id="optionD"></span>
                 </p>
               </div>
             </div>
@@ -60,11 +60,11 @@
                   </div><br><br>
                   <div class="form-group">
                     <label for="form-exam_code" class="sr-only">exam_code</label>
-                    <input id="form-exam_code" type="hidden" name="exam_code" class="form-exam_code form-control">
+                    <input id="form-exam_code" type="hidden" name="exam_code" class="form-exam_code form-control" value=<%= exam.exam_code %> >
                   </div><br>
                   <div class="form-group">
                     <label for="form-username" class="sr-only">username</label>
-                    <input id="form-username" type="hidden" name="username" class="form-username form-control">
+                    <input id="form-username" type="hidden" name="username" class="form-username form-control" value=<%= exam.username %>>
                   </div>
                   <button type="submit" class="btn">Submit</button>
                 </form>

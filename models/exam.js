@@ -1,59 +1,62 @@
-require('dotenv').config()
-var express = require('express');
-var router = express.Router();
+const {Schema}=require('mongoose')
+const connection=require('../database/database_config')
 
-var monk = require('monk');
-const db_username=process.env.DB_USERNAME
-const db_password=process.env.DB_PASSWORD
+const examSchema=new Schema({
+  exam_code:{
+    type:String,
+    trim:true,
+    maxlength:30,
+    required:true
 
-const db = monk(`mongodb+srv://${db_username}:${db_password}@cluster0.d2fg3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`);
-var exam_collection = db.get('exams');
-var student_collection = db.get('students');
-var response_collection = db.get('responses');
-
-
-module.exports = {
-// MAKE VALIDATION FUNCTIONS HERE
-// Create new student in the database
-create: function(exam, cb) {
-  exam_collection.insert(exam, cb);
 },
+exam_name:{
+        type:String,
+        trim:true,
+        maxlength:255,
+        required:true
 
-getByExamCode: function(exam_code, cb) {
-  exam_collection.findOne({exam_code: exam_code}, cb);
-},
+    },
+    course_code:{
+        type:String,
+        required:true,
+        maxlength:55,
+        trim:true
+    },
+    duration_hours:{
+      type:Number,
+      required:true
+    },
+    duration_minutes:{
+      type:Number,
+      required:true
+    },
+    
+    question:[
+      {
+      question:{
+        type:String
+      },
+        optionA:{
+            type:String
+          },
+          optionB:{
+            type:String
+          },
+        
+          optionC:{
+            type:String
+          },
+ 
+          optionD:{
+            type:String
+          },
+          key:{
+            type:String
+          }
+    }]
+})
 
-getResponseByExamCode: function(exam_code, username, cb) {
-  response_collection.findOne({exam_code: exam_code, username: username}, cb);
-},
+const Exam=connection.model('Exam',examSchema)
 
-addQuestion: function(exam_code, question_full, cb) {
-exam_collection.update(
-   { exam_code: exam_code },
-   { $push: { question_list: { $each: [ 
-     {question: question_full.question,
-     optionA: question_full.optionA,
-     optionB: question_full.optionB,
-     optionC: question_full.optionC,
-     optionD: question_full.optionD,
-     key: question_full.key
-    } ] } } }, cb);
-},
+module.exports=Exam
 
-// Submit Responses
-addResponses: function(username, exam_code, response, cb) {
-
-  var temp_response = 
-  {
-      username: username,
-      exam_code: exam_code,
-      response: response
-  };
-  response_collection.insert(temp_response, cb);
-},
-
-checkResponse: function(username, exam_code, cb) {
-  response_collection.findOne({username:username, exam_code: exam_code}, cb);
-}
-
-};

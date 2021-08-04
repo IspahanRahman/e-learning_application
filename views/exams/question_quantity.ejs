@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-  <script type="text/javascript">
-   var exam_code =JSON.stringify(exam.exam_code);
-  </script>
   <script src="/javascripts/display.js"></script>
   <head>
     <meta charset="utf-8">
@@ -24,27 +21,17 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-8 col-sm-offset-2 text">
-              <h1><a href="/faculties/home" role="button" class="btn btn-info">Submit</a>&nbsp &nbsp &nbsp &nbsp &nbsp<strong>EXAM CODE:<%= exam.exam_code%> </strong>&nbsp &nbsp &nbsp &nbsp &nbsp
-                <form role="form" action="add_question" method="post" class="login-form">
+                <form role="form" action="add_numberof_question" method="post" class="login-form">
                   <div class="form-group">
-                    <label for="form-exam_code" class="sr-only">Exam Code</label>
-                    <input id="form-exam_code" type="text" name="exam_code" class="form-exam_code form-control"  value="<%= exam.exam_code %> ">
+                    <label for="form-number_of_question" class="sr-only">Number of Question</label>
+                    <input id="form-number_of_question" type="text" name="number_of_question" class="form-number_of_question form-control"  placeholder="<%= number_of_question %> ">
                   </div>
                   <button type="submit" class="btn">Add Question</button>
                 </form>
               </h1>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-12 form-box">
-              <div class="form-top">
-                <div class="form-top-left">
-                  <h4 id="temp"></h4>
-                </div>
-              </div>
-              <div class="form-bottom"></div>
-            </div>
-          </div>
+         
         </div>
       </div>
     </div>

@@ -1,105 +1,110 @@
-const router=require('express').Router()
 const Course=require('../models/course')
 
-const default_courseid = "CourseID";
+var default_courseid = "CourseID";
+var default_course={
+	courseid: "CourseID",
+    coursename: "Course Name"
+};
 
-const default_course = {
-    courseid: "CourseID",
-    coursename: "coursename"
-  };
+exports.getCoursePageController=(req,res)=>{
+    res.render('courses/new',{title:'Add New Course',course:default_course})
+}
 
-  	
-router.get('/new', isLoggedIn, (req, res)=> {
-	res.render('courses/new', { title: 'Add New course', course: default_course});
-});
+exports.postCourseController=async (req,res,next)=>{
+    try{
+        let course=new Course(req.body)
+        await course.save()
+        res.redirect('/admin/home')
+    
+    }
+    catch(e){
+       res.redirect('/courses/new')
+       res.status(500)
+       console.log(e)
+    }
+     
+}
 
-router.post('/create', isLoggedIn, (req, res)=> {
-	var course = {
-	  courseid: req.body.courseid,
-	  coursename: req.body.coursename
-	};
-	var courseid = req.body.courseid;
+exports.getCourseEditController=(req,res)=>{
+    res.render('courses/get_courseid_edit',{title:'Get course Id', courseid:default_courseid})
+}
 
-	Course.getBycourseid(courseid, (err,doc) =>{
-	if(err)
-		res.send("Some error occured");
-	else if(doc)
-		res.redirect('/courses/new');
-		else{
-		Course.create(course, (err, doc)=> {
-			if(err)
-				res.send("Some error occured");
-			else
-				res.redirect('/admin/home');
-		})	}
-	})
-});
+exports.getCourseEditPageController=(req,res)=>{
+    let courseid=req.query.courseid
+    Course.findOne({courseid}, (err,doc)=>{
+       if(err){
+           res.send('Some error occured')
+       } 
+       else{
+           if(doc){
+               res.render('courses/edit',{title:'Edit Course',course:doc})
+           }
+           else{
+               res.render('courses/get_courseid_edit',{title:'Get course Id'})
+           }
+       }
+    })
 
-router.get('/get_courseid_edit', isLoggedIn, (req, res)=> {
-	res.render('courses/get_courseid_edit', { title: "Get course ID", courseid: default_courseid});
-});
+}
 
-router.get('/edit', isLoggedIn, (req,res) =>{
-	var courseid = req.query.courseid;
-    Course.getBycourseid(courseid, (err,doc) =>{
-		if(err)
-			res.send("Some error occured");
-		else
-		{
-			if(doc)
-			res.render('courses/edit', {title: 'Edit Course', course: doc});
-			else
-			res.render('courses/get_courseid_edit', { title: "Get course ID", courseid: default_courseid});
-		}
-	});
-});
+exports.postCourseEditController=async (req,res)=>{
+   let {coursename,courseid}=req.body
+   let courseId=req.param._id
+   console.log(courseId)
 
-router.post('/update', isLoggedIn, (req, res)=> {
-	var course = {
-	  courseid: req.body.courseid,
-	  coursename: req.body.coursename
-	};
-	var prevcourseid = req.body.prevcourseid;
-	Course.update(prevcourseid, course, (err, doc)=> {
-			if(err)
-				res.render('courses/edit', { title: 'Edit Course', course: doc});
-			else
-				res.redirect('../admin/home');
-		});
-});
-
-router.get('/get_courseid_delete', isLoggedIn, (req, res)=> {
-	var default_courseid = "User Name";
-	res.render('courses/get_courseid_delete', { title: "Get course ID", courseid: default_courseid});
-});
+   try{
+       let course=await Course.findOne({courseId})
+       if(!course){
+        let error=new Error('Course Not Found')
+        res.render('courses/edit')
+        error.status=404
+        throw error 
+        
+       }
+       await Course.findOneAndUpdate(
+           {_id:course._id},
+           {$set:{coursename,courseid}},
+           {new:true}
+           )
+           res.redirect('/admin/home')
+   }
+   catch(e){
+       console.log(e)
+       
+   }
 
 
-router.post('/delete', isLoggedIn, (req, res)=> {
-	var courseid = req.body.courseid;
-	Course.getBycourseid(courseid, (err,doc) =>{
-	if(err)
-		res.send("Some error occured");
-	else if(doc)
-	{
-	Course.remove(courseid, (err, doc)=> {
-		if(err)
-			res.send("Some error occured");
-		else
-			res.redirect('../admin/home');
-	})}
-	else
-		res.render('courses/get_courseid_delete', { title: "Get course ID", courseid: default_courseid});	
-	})
-});
+}
 
-module.exports = router;
+exports.getDeleteController=(req,res)=>{
+    const default_courseid='User Name'
+    res.render('courses/get_courseid_delete',{title:'Get Course Id',course:default_courseid})
+}
 
- function isLoggedIn(req, res, next) {
-
-    // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated()&&req.user.usertype=='admin')
-        {return next();}
-
-    // if they aren't redirect them to the home page
-    res.redirect('/');
+exports.postDeleteController=async (req,res)=>{
+   let courseid=req.body.courseid
+   console.log(courseid)
+  
+   try{
+       let course=await Course.findOne({courseid})
+       console.log(course)
+       if(!course){
+        let error=new Error('Course Not Found')
+        res.render('courses/get_courseid_delete')
+        error.status=404
+        throw error 
+        
+       }
+       await Course.findOneAndDelete(
+           {courseid}
+           )
+        await Course.findOneAndUpdate(
+            {$pull:{'courses':course._id}}
+        )
+           res.redirect('/admin/home')
+   }
+   catch(e){
+       console.log(e)
+       
+   }
 }

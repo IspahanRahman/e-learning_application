@@ -34,11 +34,15 @@
                 <form role="form" action="/take_exam/exam" method="post" name="takeexam" class="login-form">
                   <div class="form-group">
                     <label for="form-exam_code" class="sr-only">exam_code</label>
-                    <input id="form-exam_code" type="text" name="exam_code" class="form-exam_code form-control">
+                    <input id="form-exam_code" type="text" name="exam_code" class="form-exam_code form-control" placeholder="<%= exam.exam_code %> " >
+                  </div>
+                  <div class="form-group">
+                    <label for="form-exam_code" class="sr-only">student username</label>
+                    <input id="form-exam_code" type="text" name="username" class="form-username form-control" placeholder="<%= exam.student_username %> " >
                   </div>
                   <div class="form-group">
                     <label for="form-exam_code" class="sr-only">exam_code</label>
-                    <input id="form-exam_code" type="hidden" name="username" class="form-exam_code form-control">
+                    <input id="form-exam_code" type="hidden" name="username" class="form-exam_code form-control" placeholder="<%= exam.student_username %> " >
                   </div>
                   <button type="submit" class="btn">Submit</button>
                 </form>

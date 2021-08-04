@@ -34,23 +34,23 @@
                 <form role="form" action="create_question" method="post" class="login-form">
                   <div class="form-group">
                     <label for="form-question" class="sr-only">Question</label>
-                    <input id="form-question" type="text" name="question" class="form-question form-control">
+                    <input id="form-question" type="text" name="question" class="form-question form-control" placeholder="<%= question_full.question %> ">
                   </div>
                   <div class="form-group">
                     <label for="form-optionA" class="sr-only">Option A</label>
-                    <input id="form-optionA" type="text" name="optionA" class="form-optionA form-control">
+                    <input id="form-optionA" type="text" name="optionA" class="form-optionA form-control" placeholder="<%= question_full.optionA %> ">
                   </div>
                   <div class="form-group">
                     <label for="form-optionB" class="sr-only">Option B</label>
-                    <input id="form-optionB" type="text" name="optionB" class="form-optionB form-control">
+                    <input id="form-optionB" type="text" name="optionB" class="form-optionB form-control" placeholder="<%= question_full.optionB %> ">
                   </div>
                   <div class="form-group">
                     <label for="form-optionC" class="sr-only">Option C</label>
-                    <input id="form-optionC" type="text" name="optionC" class="form-optionC form-control">
+                    <input id="form-optionC" type="text" name="optionC" class="form-optionC form-control" placeholder="<%= question_full.optionC %>" >
                   </div>
                   <div class="form-group">
                     <label for="form-optionD" class="sr-only">Option D</label>
-                    <input id="form-optionD" type="text" name="optionD" class="form-optionD form-control">
+                    <input id="form-optionD" type="text" name="optionD" class="form-optionD form-control" placeholder="<%= question_full.optionD %>" >
                   </div>
                   <div class="form-group">
                     <p>Key</p>
@@ -64,7 +64,7 @@
                   </div>
                   <div class="form-group">
                     <label for="form-exam_code" class="sr-only">Exam Code</label>
-                    <input id="form-exam_code" type="hidden" name="exam_code" class="form-exam_code form-control">
+                    <input id="form-exam_code" type="hidden" name="exam_code" class="form-exam_code form-control" value="<%= exam_code %> ">
                   </div>
                   <button type="submit" class="btn">Add</button>
                 </form>

@@ -35,19 +35,19 @@
                 <form role="form" action="create" method="post" class="login-form">
                   <div class="form-group">
                     <label for="form-name" class="sr-only">Name</label>
-                    <input id="form-name" type="text" name="name" class="form-name form-control">
+                    <input id="form-name" type="text" name="name" placeholder="<%= student.name %> " class="form-name form-control">
                   </div>
                   <div class="form-group">
                     <label for="form-roll" class="sr-only">Roll Number</label>
-                    <input id="form-roll" type="text" name="rollno" class="form-roll form-control">
+                    <input id="form-roll" type="text" name="rollno" placeholder="<%= student.rollno %>"class="form-roll form-control">
                   </div>
                   <div class="form-group">
                     <label for="form-username" class="sr-only">Username</label>
-                    <input id="form-username" type="text" name="username" class="form-username form-control">
+                    <input id="form-username" type="text" name="username" placeholder="<%= student.username %>" class="form-username form-control">
                   </div>
                   <div class="form-group">
                     <label for="form-password" class="sr-only">Password</label>
-                    <input id="form-password" type="password" name="password" class="form-password form-control">
+                    <input id="form-password" type="password" name="password" placeholder="<%= student.password %>" class="form-password form-control">
                   </div>
                   <button type="submit" class="btn">Add</button>
                 </form>

@@ -35,15 +35,15 @@
                 <form role="form" action="update" method="post" class="login-form">
                   <div class="form-group">
                     <label for="form-name" class="sr-only">CourseName</label>
-                    <input id="form-name" type="text" name="coursename" class="form-name form-control">
+                    <input id="form-name" type="text" name="coursename" class="form-name form-control" value="<%= course.coursename %> ">
                   </div>
                   <div class="form-group">
                     <label for="form-courseid" class="sr-only">courseid</label>
-                    <input id="form-courseid" type="text" name="courseid" class="form-courseid form-control">
+                    <input id="form-courseid" type="text" name="courseid" class="form-courseid form-control" value="<%= course.courseid %>">
                   </div>
                   <div class="form-group">
                     <label for="form-password" class="sr-only">Previous</label>
-                    <input id="form-password" type="hidden" name="" class="form-password form-control">
+                    <input id="form-password" type="hidden" name="" class="form-password form-control" value="<%= course.courseid %>">
                   </div>
                   <button type="submit" class="btn">Edit</button>
                 </form>
